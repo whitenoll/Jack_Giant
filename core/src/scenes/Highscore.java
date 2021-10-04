@@ -11,7 +11,7 @@ import helpers.GameInfo;
 import huds.HighscoreButtons;
 import net.christopherwhite.jackthegiant.GameMain;
 
-public class Highscore  implements Screen{
+public class Highscore implements Screen {
     private GameMain game;
 
     private OrthographicCamera mainCamera;
@@ -48,7 +48,7 @@ public class Highscore  implements Screen{
 
         game.getBatch().begin();
 
-        game.getBatch().draw(bg,0,0);
+        game.getBatch().draw(bg, 0, 0);
 
         game.getBatch().end();
 
@@ -78,6 +78,8 @@ public class Highscore  implements Screen{
 
     @Override
     public void dispose() {
+
         bg.dispose();
+        btns.getStage().dispose();
     }
 } // highscore
