@@ -8,8 +8,8 @@ import net.christopherwhite.jackthegiant.GameMain;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = GameInfo.Width;
-		config.height = GameInfo.Height;
+		config.width = GameInfo.WIDTH;
+		config.height = GameInfo.HEIGHT;
 		new LwjglApplication(new GameMain(), config);
 	}
 }

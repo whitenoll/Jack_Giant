@@ -25,10 +25,10 @@ public class Highscore implements Screen {
     public Highscore(GameMain game) {
         this.game = game;
         mainCamera = new OrthographicCamera();
-        mainCamera.setToOrtho(false, GameInfo.Width, GameInfo.Height);
-        mainCamera.position.set(GameInfo.Width / 2f, GameInfo.Height / 2f, 0);
+        mainCamera.setToOrtho(false, GameInfo.WIDTH, GameInfo.HEIGHT);
+        mainCamera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
 
-        gameViewport = new StretchViewport(GameInfo.Width, GameInfo.Height, mainCamera);
+        gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, mainCamera);
 
         bg = new Texture("Backgrounds/Highscore BG.png");
 

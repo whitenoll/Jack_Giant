@@ -30,7 +30,7 @@ private ImageButton musicBTn;
 
 public MainMenuButtons(GameMain game){
     this.game = game;
-    gameViewport = new FitViewport(GameInfo.Width, GameInfo.Height, new OrthographicCamera());
+    gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
     stage = new Stage(gameViewport, game.getBatch());
 
     Gdx.input.setInputProcessor(stage);
@@ -52,11 +52,11 @@ void createAndPositionButtons(){
    quitBTn = new ImageButton(new SpriteDrawable(new Sprite(new Texture("Buttons/Main Menu/Quit.png"))));
    musicBTn = new ImageButton(new SpriteDrawable(new Sprite(new Texture("Buttons/Main Menu/Music On.png"))));
 
-    playBtn.setPosition(GameInfo.Width / 2f - 80, GameInfo.Height / 2f +50, Align.center);
-    highscoreBtn.setPosition(GameInfo.Width / 2f - 60, GameInfo.Height / 2f -20, Align.center);
-    optionsBTn.setPosition(GameInfo.Width / 2f - 40, GameInfo.Height / 2f -90, Align.center);
-    quitBTn.setPosition(GameInfo.Width / 2f - 20, GameInfo.Height / 2f -160, Align.center);
-    musicBTn.setPosition(GameInfo.Width - 13,13, Align.bottomRight);
+    playBtn.setPosition(GameInfo.WIDTH / 2f - 80, GameInfo.HEIGHT / 2f +50, Align.center);
+    highscoreBtn.setPosition(GameInfo.WIDTH / 2f - 60, GameInfo.HEIGHT / 2f -20, Align.center);
+    optionsBTn.setPosition(GameInfo.WIDTH / 2f - 40, GameInfo.HEIGHT / 2f -90, Align.center);
+    quitBTn.setPosition(GameInfo.WIDTH / 2f - 20, GameInfo.HEIGHT / 2f -160, Align.center);
+    musicBTn.setPosition(GameInfo.WIDTH - 13,13, Align.bottomRight);
 }
 void addAllListeners() {
     playBtn.addListener(new ChangeListener() {

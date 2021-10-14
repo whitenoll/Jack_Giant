@@ -22,8 +22,8 @@ public class CloudsController {
 
     public CloudsController(World world) {
         this.world = world;
-        minX = GameInfo.Width / 2f - 110;
-        maxX = GameInfo.Width / 2f + 110;
+        minX = GameInfo.WIDTH / 2f - 110;
+        maxX = GameInfo.WIDTH / 2f + 110;
         createClouds();
         positionClouds(true);
     }
@@ -52,7 +52,7 @@ public class CloudsController {
         }
         float positionY = 0;
         if (firstTimeArranging){
-            positionY = GameInfo.Height / 2f;
+            positionY = GameInfo.HEIGHT / 2f;
         }else {
             positionY = lastCloudPositionY;
         }
@@ -88,7 +88,7 @@ public class CloudsController {
     }
     public void createAndArrangeNewClouds(){
         for (int i = 0; i < clouds.size; i++) {
-            if((clouds.get(i).getY()-GameInfo.Height / 2 - 15) > cameraY){
+            if((clouds.get(i).getY()-GameInfo.HEIGHT / 2 - 15) > cameraY){
                 //cloud is out of bounds remove it
                 clouds.get(i).getTexture().dispose();
                 clouds.removeIndex(i);
@@ -104,7 +104,7 @@ public class CloudsController {
         this.cameraY = cameraY;
     }
     public Player positionThePlayer(Player player){
-        player = new Player(world, clouds.get(0).getX(), clouds.get(0).getY()+100);
+        player = new Player(world, clouds.get(0).getX() - 60, clouds.get(0).getY()+78);
         return player;
     }
     private float randomBetweenNumbers(float min, float max){

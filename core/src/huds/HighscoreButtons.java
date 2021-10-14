@@ -32,7 +32,7 @@ public class HighscoreButtons {
     public HighscoreButtons(GameMain game){
         this.game = game;
 
-        gameViewport = new FitViewport(GameInfo.Width, GameInfo.Height, new OrthographicCamera());
+        gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
 
         stage = new Stage(gameViewport, game.getBatch());
 
@@ -63,8 +63,8 @@ public class HighscoreButtons {
 
 
 
-        scoreLabel.setPosition(GameInfo.Width /2f -40, GameInfo.Height / 2-120);
-        coinLabel.setPosition(GameInfo.Width /2f -40, GameInfo.Height / 2-220);
+        scoreLabel.setPosition(GameInfo.WIDTH /2f -40, GameInfo.HEIGHT / 2-120);
+        coinLabel.setPosition(GameInfo.WIDTH /2f -40, GameInfo.HEIGHT / 2-220);
 
         backBtn.addListener(new ChangeListener() {
             @Override

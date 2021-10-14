@@ -29,7 +29,7 @@ public class OptionsButtons {
     public OptionsButtons(GameMain game){
         this.game = game;
 
-        gameViewport = new FitViewport(GameInfo.Width, GameInfo.Height, new OrthographicCamera());
+        gameViewport = new FitViewport(GameInfo.WIDTH, GameInfo.HEIGHT, new OrthographicCamera());
         stage = new Stage(gameViewport, game.getBatch());
 
         Gdx.input.setInputProcessor(stage);
@@ -51,13 +51,13 @@ public class OptionsButtons {
         sign = new Image(new SpriteDrawable(new Sprite(new Texture("Buttons/Options Menu/Check Sign.png"))));
         backBtn.setPosition(17,17, Align.bottomLeft);
 
-        easy.setPosition(GameInfo.Width / 2f, GameInfo.Height / 2f + 40, Align.center);
-        medium.setPosition(GameInfo.Width / 2f, GameInfo.Height / 2f - 40, Align.center);
-        hard.setPosition(GameInfo.Width / 2f, GameInfo.Height / 2f - 120, Align.center);
+        easy.setPosition(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f + 40, Align.center);
+        medium.setPosition(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f - 40, Align.center);
+        hard.setPosition(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f - 120, Align.center);
 
 
         //todo: remove later
-        sign.setPosition(GameInfo.Width / 2f + 76, medium.getY() + 13, Align.bottomLeft);
+        sign.setPosition(GameInfo.WIDTH / 2f + 76, medium.getY() + 13, Align.bottomLeft);
     }
     void addAllListeners(){
         backBtn.addListener(new ChangeListener() {

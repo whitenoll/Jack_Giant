@@ -41,12 +41,12 @@ public class Gameplay implements Screen {
 
     public Gameplay(GameMain game) {
         this.game = game;
-        mainCamera = new OrthographicCamera(GameInfo.Width, GameInfo.Height);
-        mainCamera.position.set(GameInfo.Width / 2f, GameInfo.Height / 2f, 0);
-        gameViewport = new StretchViewport(GameInfo.Width, GameInfo.Height, mainCamera);
+        mainCamera = new OrthographicCamera(GameInfo.WIDTH, GameInfo.HEIGHT);
+        mainCamera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
+        gameViewport = new StretchViewport(GameInfo.WIDTH, GameInfo.HEIGHT, mainCamera);
         box2DCamera = new OrthographicCamera();
-        box2DCamera.setToOrtho(false, GameInfo.Width / GameInfo.PPM, GameInfo.Height / GameInfo.PPM);
-        box2DCamera.position.set(GameInfo.Width / 2f, GameInfo.Height / 2f, 0);
+        box2DCamera.setToOrtho(false, GameInfo.WIDTH / GameInfo.PPM, GameInfo.HEIGHT / GameInfo.PPM);
+        box2DCamera.position.set(GameInfo.WIDTH / 2f, GameInfo.HEIGHT / 2f, 0);
         debugRenderer = new Box2DDebugRenderer();
 
         hud = new UIHud(game);
