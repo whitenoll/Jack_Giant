@@ -14,7 +14,7 @@ public class Player extends Sprite {
 
     private World world;
     private Body body;
-
+    private String name;
     private TextureAtlas playerAtlas;
     private Animation<TextureRegion> animation;
     private float elapsedTime;
@@ -45,7 +45,11 @@ public class Player extends Sprite {
         fixtureDef.density = 4f;
         fixtureDef.friction = 2f;
         fixtureDef.shape = shape;
+        fixtureDef.filter.categoryBits = GameInfo.PLAYER;
+        fixtureDef.filter.maskBits = GameInfo.DEFAULT | GameInfo.COLLECTABLE;
+
         Fixture fixture = body.createFixture(fixtureDef);
+        fixture.setUserData("Player");
 
         shape.dispose();
 

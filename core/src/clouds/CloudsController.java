@@ -1,5 +1,6 @@
 package clouds;
 
+import collectables.Collectable;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -12,6 +13,7 @@ public class CloudsController {
     private World world;
 
     private Array<Cloud> clouds = new Array<Cloud>();
+    private Array<Collectable> collectables = new Array<Collectable>();
     private final float DISTANCE_BETWEEN_CLOUDS = 250f;
     private float minX;
     private float maxX;
@@ -76,6 +78,10 @@ public class CloudsController {
             }
 
         }
+        // remove this late, just a test
+        Collectable c1 = new Collectable(world, "Life");
+        c1.setCollectablePosition(clouds.get(1).getX(), clouds.get(1).getY() + 40);
+        collectables.add(c1);
     }
     public void drawClouds(SpriteBatch batch){
         for (Cloud c: clouds){
@@ -86,6 +92,22 @@ public class CloudsController {
             }
         }
     }
+    public void drawCollectables(SpriteBatch batch){
+        for (Collectable c: collectables) {
+            c.updateCollectable();
+            batch.draw(c, c.getX(), c.getY());
+        }
+    }
+    public void removeCollectables(){
+        for (int i = 0; i < collectables.size; i++) {
+            if (collectables.get(i).getFixture().getUserData() == "REMOVE"){
+                collectables.get(i).changeFilter();
+                collectables.get(i).getTexture().dispose();
+                collectables.removeIndex(i);
+            }
+        }
+    }
+
     public void createAndArrangeNewClouds(){
         for (int i = 0; i < clouds.size; i++) {
             if((clouds.get(i).getY()-GameInfo.HEIGHT / 2 - 15) > cameraY){
