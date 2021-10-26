@@ -75,13 +75,30 @@ public class CloudsController {
 
                 positionY -= DISTANCE_BETWEEN_CLOUDS;
                 lastCloudPositionY = positionY;
+
+                if(!firstTimeArranging & c.getCloudName() != "Dark Cloud"){
+                    int rand = random.nextInt(10);
+                    if(rand > 5) {
+                        int randomCollectable = random.nextInt(2);
+                        if (randomCollectable == 0){
+                            // spawn life, if the life count is lower than 2
+                            Collectable collectable = new Collectable(world, "Life");
+                            collectable.setCollectablePosition(c.getX(), c.getY() + 40);
+                            collectables.add(collectable);
+                        } else {
+                            //spawn coin
+                            Collectable collectable = new Collectable(world, "Coin");
+                            collectable.setCollectablePosition(c.getX(), c.getY() + 40);
+                            collectables.add(collectable);
+                        }
+                    }
+
+                }
             }
 
+
+
         }
-        // remove this late, just a test
-        Collectable c1 = new Collectable(world, "Life");
-        c1.setCollectablePosition(clouds.get(1).getX(), clouds.get(1).getY() + 40);
-        collectables.add(c1);
     }
     public void drawClouds(SpriteBatch batch){
         for (Cloud c: clouds){
