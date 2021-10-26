@@ -139,6 +139,16 @@ public class CloudsController {
             positionClouds(false);
         }
     }
+
+    public void removeOffScreenCollectables(){
+        for(int i = 0; i < collectables.size; i++){
+            if((collectables.get(i).getY() - GameInfo.HEIGHT / 2f - 15) > cameraY){
+                collectables.get(i).getTexture().dispose();
+                collectables.removeIndex(i);
+            }
+        }
+
+    }
     public void setCameraY(float cameraY){
         this.cameraY = cameraY;
     }
