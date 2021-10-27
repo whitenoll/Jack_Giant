@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import helpers.GameInfo;
+import helpers.GameManager;
 import huds.UIHud;
 import javafx.stage.Stage;
 import net.christopherwhite.jackthegiant.GameMain;
@@ -31,6 +32,8 @@ public class Gameplay implements Screen,ContactListener {
 
     private Sprite[] bgs;
     private float lastYPosition;
+
+    private boolean touchedForTheFirstTime;
 
     private UIHud hud;
 
@@ -70,14 +73,24 @@ public class Gameplay implements Screen,ContactListener {
         }
 
     }
-
+    void checkForFirstTouch(){
+        if(!touchedForTheFirstTime){
+            if(Gdx.input.justTouched()){
+                touchedForTheFirstTime = true;
+                GameManager.getInstance().isPaused = false;
+            }
+        }
+    }
     void update(float dt) {
-        handleInput(dt);
-        moveCamera();
-        checkBackgroundOutOfBounds();
-        cloudsController.setCameraY(mainCamera.position.y);
-        cloudsController.createAndArrangeNewClouds();
-        cloudsController.removeOffScreenCollectables();
+        checkForFirstTouch();
+        if(!GameManager.getInstance().isPaused){
+            handleInput(dt);
+            moveCamera();
+            checkBackgroundOutOfBounds();
+            cloudsController.setCameraY(mainCamera.position.y);
+            cloudsController.createAndArrangeNewClouds();
+            cloudsController.removeOffScreenCollectables();
+        }
     }
 
     void createBackgrounds() {
@@ -184,13 +197,13 @@ public class Gameplay implements Screen,ContactListener {
     }
     if(body1.getUserData() == "Player" && body2.getUserData() == "Coin"){
         // collided with the coin
-        System.out.println("COIN");
+       hud.incrementCoins();
         body2.setUserData("REMOVE");
         cloudsController.removeCollectables();
     }
     if(body1.getUserData() == "Player" && body2.getUserData() == "Life"){
             // collided with the life
-        System.out.println("Collided with life");
+        hud.incrementLives();
         body2.setUserData("REMOVE");
         cloudsController.removeCollectables();
         }

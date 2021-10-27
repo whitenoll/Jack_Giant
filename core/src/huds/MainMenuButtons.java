@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import helpers.GameInfo;
+import helpers.GameManager;
 import net.christopherwhite.jackthegiant.GameMain;
 import scenes.Gameplay;
 import scenes.Highscore;
@@ -63,6 +64,7 @@ void addAllListeners() {
         @Override
         public void changed(ChangeEvent changeEvent, Actor actor) {
             // any code hat we type will be executed when we press the play button
+            GameManager.getInstance().gameStartedFromMainMenu = true;
             game.setScreen(new Gameplay(game));
         }
     });

@@ -99,6 +99,7 @@ public class CloudsController {
 
 
         }
+
     }
     public void drawClouds(SpriteBatch batch){
         for (Cloud c: clouds){

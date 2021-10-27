@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import helpers.GameInfo;
+import helpers.GameManager;
 import net.christopherwhite.jackthegiant.GameMain;
 import scenes.MainMenu;
 
@@ -40,6 +41,17 @@ public class UIHud {
         stage = new Stage(gameViewport, game.getBatch());
 
         Gdx.input.setInputProcessor(stage);
+
+        if(GameManager.getInstance().gameStartedFromMainMenu){
+            //first time starting game set initial values
+            GameManager.getInstance().gameStartedFromMainMenu = false;
+
+            GameManager.getInstance().lifeScore = 2;
+            GameManager.getInstance().coinScore = 0;
+            GameManager.getInstance().score = 0;
+
+
+        }
 
         createLabels();
         createImages();
@@ -79,9 +91,9 @@ public class UIHud {
         parameter.size = 40;
 
         BitmapFont font = generator.generateFont(parameter);
-        coinLabel = new Label("x0", new Label.LabelStyle(font, Color.WHITE));
-        lifeLabel = new Label("x2", new Label.LabelStyle(font, Color.WHITE));
-        scoreLabel = new Label("x100", new Label.LabelStyle(font, Color.WHITE));
+        coinLabel = new Label("x" + GameManager.getInstance().coinScore, new Label.LabelStyle(font, Color.WHITE));
+        lifeLabel = new Label("x" + GameManager.getInstance().lifeScore, new Label.LabelStyle(font, Color.WHITE));
+        scoreLabel = new Label(String.valueOf(GameManager.getInstance().score), new Label.LabelStyle(font, Color.WHITE));
 
     }
     void createImages(){
@@ -100,7 +112,10 @@ public class UIHud {
             public void changed(ChangeEvent event, Actor actor) {
 
                 //pause the game
-                createPausePanel();
+                if(!GameManager.getInstance().isPaused) {
+                    GameManager.getInstance().isPaused = true;
+                    createPausePanel();
+                }
             }
         });
     }
@@ -115,7 +130,9 @@ public class UIHud {
         resumeBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+
                 removePausePanel();
+                GameManager.getInstance().isPaused = false;
 
             }
         });
@@ -135,6 +152,23 @@ public class UIHud {
         pausePanelImage.remove();
         resumeBtn.remove();
         quitBtn.remove();
+    }
+
+    public void incrementScore(int score){
+        GameManager.getInstance().score = score;//
+        scoreLabel.setText(String.valueOf(GameManager.getInstance().score));
+    }
+
+    public void incrementCoins(){
+        GameManager.getInstance().coinScore++;
+        coinLabel.setText("x" + GameManager.getInstance().coinScore);
+        incrementScore(200);
+    }
+
+    public void incrementLives(){
+        GameManager.getInstance().lifeScore++;
+        lifeLabel.setText("x" + GameManager.getInstance().lifeScore);
+        incrementScore(300);
     }
 
     public Stage getStage(){
