@@ -90,6 +90,7 @@ public class Gameplay implements Screen,ContactListener {
             cloudsController.setCameraY(mainCamera.position.y);
             cloudsController.createAndArrangeNewClouds();
             cloudsController.removeOffScreenCollectables();
+            checkPlayersBounds();
         }
     }
 
@@ -116,6 +117,20 @@ public class Gameplay implements Screen,ContactListener {
                 bgs[i].setPosition(0, -newPosition);
                 lastYPosition = Math.abs(newPosition);
             }
+        }
+    }
+    void checkPlayersBounds(){
+        if (player.getY() - GameInfo.HEIGHT / 2f - player.getHeight() / 2f > mainCamera.position.y){
+            System.out.println("player out of bounds");
+            GameManager.getInstance().isPaused = true;
+        }
+        if (player.getY() + GameInfo.HEIGHT / 2f + player.getHeight() / 2f < mainCamera.position.y){
+            System.out.println("player out of bounds");
+            GameManager.getInstance().isPaused = true;
+        }
+        if((player.getX() - 25 > GameInfo.WIDTH)||(player.getX() + 60 < 0)){
+            System.out.println("off screen left or right");
+            GameManager.getInstance().isPaused = true;
         }
     }
 
