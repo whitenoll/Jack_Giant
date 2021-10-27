@@ -41,6 +41,8 @@ public class Gameplay implements Screen,ContactListener {
 
     private Player player;
 
+    private float lastPlayerY;
+
     public Gameplay(GameMain game) {
         this.game = game;
         mainCamera = new OrthographicCamera(GameInfo.WIDTH, GameInfo.HEIGHT);
@@ -78,6 +80,7 @@ public class Gameplay implements Screen,ContactListener {
             if(Gdx.input.justTouched()){
                 touchedForTheFirstTime = true;
                 GameManager.getInstance().isPaused = false;
+                lastPlayerY = player.getY();
             }
         }
     }
@@ -91,6 +94,7 @@ public class Gameplay implements Screen,ContactListener {
             cloudsController.createAndArrangeNewClouds();
             cloudsController.removeOffScreenCollectables();
             checkPlayersBounds();
+            countScore();
         }
     }
 
@@ -131,6 +135,13 @@ public class Gameplay implements Screen,ContactListener {
         if((player.getX() - 25 > GameInfo.WIDTH)||(player.getX() + 60 < 0)){
             System.out.println("off screen left or right");
             GameManager.getInstance().isPaused = true;
+        }
+    }
+
+    void countScore(){
+        if(lastPlayerY > player.getY()){
+            hud.incrementScore(1);
+            lastPlayerY = player.getY();
         }
     }
 
