@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import helpers.GameInfo;
+import helpers.GameManager;
 import player.Player;
 
 import java.util.Random;
@@ -82,9 +83,16 @@ public class CloudsController {
                         int randomCollectable = random.nextInt(2);
                         if (randomCollectable == 0){
                             // spawn life, if the life count is lower than 2
+                            if(GameManager.getInstance().lifeScore < 2 ){
                             Collectable collectable = new Collectable(world, "Life");
                             collectable.setCollectablePosition(c.getX(), c.getY() + 40);
                             collectables.add(collectable);
+                            } else{
+                                //spawn coin
+                                Collectable collectable = new Collectable(world, "Coin");
+                                collectable.setCollectablePosition(c.getX(), c.getY() + 40);
+                                collectables.add(collectable);
+                            }
                         } else {
                             //spawn coin
                             Collectable collectable = new Collectable(world, "Coin");

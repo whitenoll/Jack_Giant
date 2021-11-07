@@ -162,6 +162,7 @@ public class Gameplay implements Screen,ContactListener {
             //player has no more lives
             //check if we have a new highscore
             // show final score to user
+            hud.createGameOverPanel();
             //load main menu
             RunnableAction run = new RunnableAction();
 
