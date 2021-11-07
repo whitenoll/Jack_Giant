@@ -171,6 +171,12 @@ public class UIHud {
         incrementScore(300);
     }
 
+    public void decrementLife(){
+        GameManager.getInstance().lifeScore--;
+        if(GameManager.getInstance().lifeScore >= 0){
+            lifeLabel.setText("x" + GameManager.getInstance().lifeScore);
+        }
+    }
     public Stage getStage(){
         return this.stage;
     }

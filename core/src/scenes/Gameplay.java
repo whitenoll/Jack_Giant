@@ -125,16 +125,19 @@ public class Gameplay implements Screen,ContactListener {
     }
     void checkPlayersBounds(){
         if (player.getY() - GameInfo.HEIGHT / 2f - player.getHeight() / 2f > mainCamera.position.y){
-            System.out.println("player out of bounds");
-            GameManager.getInstance().isPaused = true;
+            if(!player.isDead()){
+                playerDied();
+            }
         }
         if (player.getY() + GameInfo.HEIGHT / 2f + player.getHeight() / 2f < mainCamera.position.y){
-            System.out.println("player out of bounds");
-            GameManager.getInstance().isPaused = true;
+            if(!player.isDead()){
+                playerDied();
+            }
         }
         if((player.getX() - 25 > GameInfo.WIDTH)||(player.getX() + 60 < 0)){
-            System.out.println("off screen left or right");
-            GameManager.getInstance().isPaused = true;
+            if(!player.isDead()){
+                playerDied();
+            }
         }
     }
 
@@ -142,6 +145,26 @@ public class Gameplay implements Screen,ContactListener {
         if(lastPlayerY > player.getY()){
             hud.incrementScore(1);
             lastPlayerY = player.getY();
+        }
+    }
+
+    void playerDied(){
+        GameManager.getInstance().isPaused = true;
+
+        hud.decrementLife();
+        player.setDead(true);
+        player.setPosition(1000,1000);
+
+        if(GameManager.getInstance().lifeScore < 0){
+            //player has no more lives
+            //check if we have a new highscore
+            // show final score to user
+            //load main menu
+            game.setScreen(new MainMenu(game));
+
+        } else {
+            //reload game to continue to play
+            game.setScreen(new Gameplay(game));
         }
     }
 
@@ -233,7 +256,14 @@ public class Gameplay implements Screen,ContactListener {
         body2.setUserData("REMOVE");
         cloudsController.removeCollectables();
         }
+
+
+    if(body1.getUserData() == "Player" && body2.getUserData() == "Dark Cloud"){
+        if (!player.isDead()){
+            playerDied();
+        }
     }
+}
 
     @Override
     public void endContact(Contact contact) {
