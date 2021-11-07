@@ -11,6 +11,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import helpers.GameInfo;
@@ -160,11 +163,41 @@ public class Gameplay implements Screen,ContactListener {
             //check if we have a new highscore
             // show final score to user
             //load main menu
-            game.setScreen(new MainMenu(game));
+            RunnableAction run = new RunnableAction();
+
+            run.setRunnable(new Runnable() {
+                @Override
+                public void run() {
+                    game.setScreen(new MainMenu(game));
+                }
+            });
+            SequenceAction sa = new SequenceAction();
+            sa.addAction(Actions.delay(3f));
+            sa.addAction(Actions.fadeOut(1f));
+            sa.addAction(Actions.fadeIn(1f));
+            sa.addAction(Actions.fadeOut(1f));
+            sa.addAction(Actions.fadeIn(1f));
+            sa.addAction(Actions.fadeOut(1f));
+            sa.addAction(run);
+
+            hud.getStage().addAction(sa);
 
         } else {
             //reload game to continue to play
-            game.setScreen(new Gameplay(game));
+            RunnableAction run = new RunnableAction();
+
+            run.setRunnable(new Runnable() {
+                @Override
+                public void run() {
+                    game.setScreen(new Gameplay(game));
+                }
+            });
+            SequenceAction sa = new SequenceAction();
+            sa.addAction(Actions.delay(3f));
+            sa.addAction(Actions.fadeOut(1f));
+            sa.addAction(run);
+
+            hud.getStage().addAction(sa);
         }
     }
 
@@ -180,7 +213,7 @@ public class Gameplay implements Screen,ContactListener {
     @Override
     public void render(float delta) {
         update(delta);
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.getBatch().begin();
         drawBackgrounds();
@@ -191,11 +224,11 @@ public class Gameplay implements Screen,ContactListener {
         player.drawPlayerAnimation(game.getBatch());
         game.getBatch().end();
 
-        debugRenderer.render(world, box2DCamera.combined);
+        //debugRenderer.render(world, box2DCamera.combined);
 
         game.getBatch().setProjectionMatrix(hud.getStage().getCamera().combined);
         hud.getStage().draw();
-
+        hud.getStage().act();
         game.getBatch().setProjectionMatrix(mainCamera.combined);
         mainCamera.update();
 

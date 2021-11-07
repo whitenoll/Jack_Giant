@@ -37,7 +37,7 @@ private MainMenuButtons btns;
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.getBatch().begin();
@@ -45,6 +45,7 @@ private MainMenuButtons btns;
         game.getBatch().end();
         game.getBatch().setProjectionMatrix(btns.getStage().getCamera().combined);
         btns.getStage().draw();
+        btns.getStage().act();
 
     }
 
