@@ -36,6 +36,10 @@ public class Gameplay implements Screen,ContactListener {
     private Sprite[] bgs;
     private float lastYPosition;
 
+    private float cameraSpeed = 10;
+    private float maxSpeed = 10;
+    private float acceleration = 10;
+
     private boolean touchedForTheFirstTime;
 
     private UIHud hud;
@@ -66,6 +70,7 @@ public class Gameplay implements Screen,ContactListener {
         cloudsController = new CloudsController(world);
         player = cloudsController.positionThePlayer(player);
         createBackgrounds();
+        setCameraSpeed();
     }
 
     void handleInput(float dt) {
@@ -91,13 +96,37 @@ public class Gameplay implements Screen,ContactListener {
         checkForFirstTouch();
         if(!GameManager.getInstance().isPaused){
             handleInput(dt);
-            moveCamera();
+            moveCamera(dt);
             checkBackgroundOutOfBounds();
             cloudsController.setCameraY(mainCamera.position.y);
             cloudsController.createAndArrangeNewClouds();
             cloudsController.removeOffScreenCollectables();
             checkPlayersBounds();
             countScore();
+        }
+    }
+    void moveCamera(float delta) {
+        mainCamera.position.y -= cameraSpeed * delta;
+
+        cameraSpeed += acceleration * delta;
+
+        if(cameraSpeed > maxSpeed) {
+            cameraSpeed = maxSpeed;
+        }
+    }
+
+    void setCameraSpeed(){
+        if(GameManager.getInstance().gameData.isEasyDifficulty()){
+            cameraSpeed = 80;
+            maxSpeed = 100;
+        }
+        if(GameManager.getInstance().gameData.isMediumDifficulty()){
+            cameraSpeed = 100;
+            maxSpeed = 120;
+        }
+        if(GameManager.getInstance().gameData.isHardDifficulty()){
+            cameraSpeed = 140;
+            maxSpeed = 160;
         }
     }
 
@@ -208,9 +237,7 @@ public class Gameplay implements Screen,ContactListener {
 
     }
 
-    void moveCamera() {
-        mainCamera.position.y -= 1.5f;
-    }
+
 
     @Override
     public void render(float delta) {
