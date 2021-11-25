@@ -161,6 +161,7 @@ public class Gameplay implements Screen,ContactListener {
         if(GameManager.getInstance().lifeScore < 0){
             //player has no more lives
             //check if we have a new highscore
+            GameManager.getInstance().checkForNewHighscores();
             // show final score to user
             hud.createGameOverPanel();
             //load main menu
