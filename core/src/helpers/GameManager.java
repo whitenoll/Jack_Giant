@@ -22,11 +22,11 @@ public class GameManager {
     public void initializeGameData(){
         if (!fileHandle.exists()){
             gameData = new GameData();
-            gameData.setCoinHighscore(0);
+            gameData.setHighscore(0);
             gameData.setCoinHighscore(0);
             gameData.setEasyDifficulty(false);
-            gameData.setHardDifficulty(false);
             gameData.setMediumDifficulty(true);
+            gameData.setHardDifficulty(false);
             gameData.setMusicOn(false);
             saveData();
 
@@ -42,18 +42,20 @@ public class GameManager {
     }
 
     public void loadData(){
+        System.out.println("reading data");
         gameData = json.fromJson(GameData.class, Base64Coder.decodeString(fileHandle.readString()));
     }
 
     public void checkForNewHighscores(){
         int oldHighScore = gameData.getHighscore();
         int oldCoinScore = gameData.getCoinHighscore();
-        if(oldHighScore< coinScore){
+        if(oldHighScore < score){
             gameData.setHighscore(score);
         }
         if(oldCoinScore < coinScore){
             gameData.setCoinHighscore(coinScore);
         }
+        saveData();
 
     }
     public static GameManager getInstance(){
