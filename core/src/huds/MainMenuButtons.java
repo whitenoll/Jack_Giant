@@ -49,6 +49,8 @@ public MainMenuButtons(GameMain game){
     stage.addActor(quitBTn);
     stage.addActor(musicBTn);
 
+    checkMusic();
+
 }
 void createAndPositionButtons(){
     playBtn = new ImageButton(new SpriteDrawable(new Sprite(new Texture("Buttons/Main Menu/Start Game.png"))));
@@ -98,16 +100,29 @@ void addAllListeners() {
     quitBTn.addListener(new ChangeListener() {
         @Override
         public void changed(ChangeEvent changeEvent, Actor actor) {
-
+            Gdx.app.exit();
         }
     });
     musicBTn.addListener(new ChangeListener() {
         @Override
         public void changed(ChangeEvent changeEvent, Actor actor) {
+            if(GameManager.getInstance().gameData.isMusicOn()){
+                GameManager.getInstance().gameData.setMusicOn(false);
+                GameManager.getInstance().stopMusic();
+            } else {
+                GameManager.getInstance().gameData.setMusicOn(true);
+                GameManager.getInstance().playMusic();
+            }
+            GameManager.getInstance().saveData();
 
         }
     });
 }
+    void checkMusic(){
+        if(GameManager.getInstance().gameData.isMusicOn()){
+            GameManager.getInstance().playMusic();
+        }
+    }
 public Stage getStage(){
     return this.stage;
 }
