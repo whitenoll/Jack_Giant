@@ -114,7 +114,7 @@ public class Gameplay implements Screen,ContactListener {
         checkForFirstTouch();
         if(!GameManager.getInstance().isPaused){
             handleInput(dt);
-            handleInputAndroid();
+//            handleInputAndroid(); //Enable for android
             moveCamera(dt);
             checkBackgroundOutOfBounds();
             cloudsController.setCameraY(mainCamera.position.y);
