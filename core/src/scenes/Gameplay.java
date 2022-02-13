@@ -89,6 +89,18 @@ public class Gameplay implements Screen,ContactListener {
         }
 
     }
+
+    void handleInputAndroid(){
+        if(Gdx.input.isTouched()){
+           if(Gdx.input.getX() > (GameInfo.WIDTH / 2)) {
+                player.movePlayer(2f);
+            }else {
+                player.movePlayer(-2f);
+           }
+        }else {
+            player.setWalking(false);
+        }
+    }
     void checkForFirstTouch(){
         if(!touchedForTheFirstTime){
             if(Gdx.input.justTouched()){
@@ -102,6 +114,7 @@ public class Gameplay implements Screen,ContactListener {
         checkForFirstTouch();
         if(!GameManager.getInstance().isPaused){
             handleInput(dt);
+            handleInputAndroid();
             moveCamera(dt);
             checkBackgroundOutOfBounds();
             cloudsController.setCameraY(mainCamera.position.y);
